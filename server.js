@@ -1,5 +1,5 @@
-var http = require('http'), 
-    fs = require('fs'), 
+var http = require('http'),
+    fs = require('fs'),
     url = require('url'),
     port = 8080;
 
@@ -9,18 +9,34 @@ var listingData, server;
 var requestHandler = function(request, response) {
   var parsedUrl = url.parse(request.url);
 
-  /*
-    Your request handler should send listingData in the JSON format if a GET request 
-    is sent to the '/listings' path. Otherwise, it should send a 404 error. 
+   if (request.url == '/listings'){
+     response.writeHead(200); //200 means ok
+       response.write(listingData);
+       response.end();
+   }
+     else {
+       response.writeHead(404);
+       response.write('Bad gateway error');
+       response.end();
+     }
 
-    HINT: explore the request object and its properties 
-    http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
-   */
 };
 
 fs.readFile('listings.json', 'utf8', function(err, data) {
   /*
-    This callback function should save the data in the listingData variable, 
-    then start the server. 
+    This callback function should save the data in the listingData variable,
+    then start the server.
    */
+   if(err){
+     console.log(err);
+   }
+   else{
+  listingData = data;
+}
 });
+
+var server = http.createServer(requestHandler);
+server.listen(port, function() {
+  //once the server is listening, this callback function is executed
+  console.log('Server listening on: localhost://' + port);
+  });
