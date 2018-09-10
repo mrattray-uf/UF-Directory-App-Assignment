@@ -1,8 +1,15 @@
 #searchBar {
-  margin: 15px 10px;
+  margin: 20px 10px;
+  background-color: orange;
+  color: blue;
 }
 
 .tableWrapper {
   max-height: 400px;
   overflow: auto;
+}
+
+.jumbotron{
+  color: blue;
+  box-sizing: content-box;
 }
