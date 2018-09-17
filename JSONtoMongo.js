@@ -7,11 +7,11 @@ var fs = require('fs'),
     mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     Listing = require('./ListingSchema.js'),
-    config = require('./config');
-    listingJSON = require('./listings');
+    config = require('./config'),
+    listingJSON = require('./listings.json');
 
 /* Connect to your database */
-mongoos.connect(config.db.uri);
+mongoose.connect(config.db.uri);
 
 /*
   Instantiate a mongoose model for each listing object in the JSON file,
@@ -20,7 +20,7 @@ mongoos.connect(config.db.uri);
 
  fs.readFile('listings.json', 'utf8', function(err, data){
    if (err) throw err;
-   var listings = JSON.parse.data;
+   var listings = JSON.parse(data);
    listings.entries.forEach(function(listing){
      var listingModel = new Listing(listing);
      listingModel.save(function(err){
@@ -29,7 +29,7 @@ mongoos.connect(config.db.uri);
      });
    });
  });
- process.exit();
+
 
 
 /*

@@ -1,7 +1,13 @@
 /* Fill out these functions using Mongoose queries*/
-var fx = require('mongoose'),
-Listing = require('./ListingSchema.js'),
-config = require('./config.js');
+var fs = require('fs'),
+    mongoose = require('mongoose'),
+    Schema = mongoose.Schema,
+    Listing = require('./ListingSchema.js'),
+    config = require('./config'),
+    listingJSON = require('./listings.json');
+
+    mongoose.connect(config.db.uri);
+
 
 var findLibraryWest = function() {
    Listing.findOne({name: 'Library West'}, function(err, data){
@@ -10,16 +16,12 @@ var findLibraryWest = function() {
    });
 };
 var removeCable = function() {
-   Listing.find({code : 'CABL'}, function(err, data){
+   Listing.findOneAndRemove({code : 'CABL'}, function(err, data){
      if (err) throw err;
-     data.remove(function(err){
-       if(err) throw err;
-       consle.log(data);
-     });
    });
 };
 var updatePhelpsLab = function() {
-   Listing.findOne({name: 'Phelps Labratory'}, function(err, data){
+   Listing.findOne({name: 'Phelps Laboratory'}, function(err, data){
      if (err) throw err;
      data.address = '1953 Museum Road Gainesville, FL 32603';
      data.save(function(err){
